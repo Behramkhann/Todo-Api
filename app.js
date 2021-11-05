@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const sequelize = require("./util/connection");
+const User = require("./models/User");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -20,10 +21,8 @@ app.use("/", (req, res, next) => {
 
 sequelize
   .sync()
-  .then((res) => {
-    console.log(res);
-  })
-  .then((err) => {
+  .then((res) => {})
+  .catch((err) => {
     console.log(err);
   });
 module.exports = app;

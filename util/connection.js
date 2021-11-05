@@ -1,4 +1,4 @@
-const Sequelize = require("Sequelize");
+const Sequelize = require("sequelize").Sequelize;
 
 const sequelize = new Sequelize("todo", "root", "nodejs", {
   dialect: "mysql",
