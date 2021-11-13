@@ -22,9 +22,21 @@ exports.signup_post = (req, res, next) => {
               user_name: username,
               password: hash,
             })
-              .then((result) => {
+              .then((user) => {
+                const token = jwt.sign(
+                  {
+                    id: user.id,
+                    username: user.user_name,
+                  },
+                  process.env.JWT_KEY,
+                  {
+                    expiresIn: "1h",
+                  }
+                );
                 res.status(200).json({
-                  message: "Signup successfully",
+                  message: "AUTH SIGN UP SUCCESSFUL",
+                  token: token,
+                  user: user,
                 });
               })
               .catch((err) => {
@@ -57,7 +69,7 @@ exports.login_post = (req, res, next) => {
                 id: user.id,
                 username: user.user_name,
               },
-              "nodetodo",
+              process.env.JWT_KEY,
               {
                 expiresIn: "1h",
               }
@@ -65,6 +77,7 @@ exports.login_post = (req, res, next) => {
             res.status(200).json({
               message: "AUTH SUCCESSFUL",
               token: token,
+              userId: user.id,
             });
           }
         });
